@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"github.com/ing-bank/flink-deployer/cmd/cli/flink"
+	"flink-deployer/cmd/cli/flink"
 	"github.com/spf13/afero"
 )
 
@@ -10,6 +10,7 @@ import (
 type Operator interface {
 	Deploy(d Deploy) error
 	Update(u UpdateJob) error
+	Terminate(t TerminateJob) error
 	RetrieveJobs() ([]flink.Job, error)
 }
 

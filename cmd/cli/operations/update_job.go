@@ -6,8 +6,8 @@ import (
 	"log"
 	"time"
 
+	"flink-deployer/cmd/cli/flink"
 	"github.com/cenkalti/backoff"
-	"github.com/ing-bank/flink-deployer/cmd/cli/flink"
 )
 
 // UpdateJob represents the configuration used for
