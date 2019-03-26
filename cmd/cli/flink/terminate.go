@@ -20,19 +20,38 @@ func (c FlinkRestClient) Terminate(jobID string, mode string) error {
 	reqBody := new(bytes.Buffer)
 	json.NewEncoder(reqBody).Encode(terminateRequest)
 
-	req, err := retryablehttp.NewRequest("PATCH", c.constructURL(fmt.Sprintf("jobs/%v?mode=%v", jobID, mode)), nil)
+	if len(mode) > 0 {
+		req, err := retryablehttp.NewRequest("PATCH", c.constructURL(fmt.Sprintf("jobs/%v?mode=%v", jobID, mode)), nil)
 
-	if err != nil {
-		return err
-	}
+		if err != nil {
+			return err
+		}
 
-	res, err := c.Client.Do(req)
-	if err != nil {
-		return err
-	}
+		res, err := c.Client.Do(req)
+		if err != nil {
+			return err
+		}
 
-	if res.StatusCode != 202 {
-		return fmt.Errorf("Unexpected response status %v", res.StatusCode)
+		if res.StatusCode != 202 {
+			return fmt.Errorf("Unexpected response status %v", res.StatusCode)
+		}
+	} else {
+		req, err := retryablehttp.NewRequest("PATCH", c.constructURL(fmt.Sprintf("jobs/%v", jobID)), nil)
+
+		if err != nil {
+			return err
+		}
+
+		res, err := c.Client.Do(req)
+		if err != nil {
+			return err
+		}
+
+		if res.StatusCode != 202 {
+			return fmt.Errorf("Unexpected response status %v", res.StatusCode)
+		}
+
+		return nil
 	}
 
 	return nil

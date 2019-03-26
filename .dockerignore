@@ -2,6 +2,7 @@
 **
 
 # Whitelist
+!cli
 !cmd
 !vendor
 !flink-sample-job/target/
