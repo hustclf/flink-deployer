@@ -11,6 +11,7 @@ import (
  */
 
 var mockedCancelError error
+var mockedTerminateError error
 var mockedCreateSavepointResponse flink.CreateSavepointResponse
 var mockedCreateSavepointError error
 var mockedMonitorSavepointCreationResponse flink.MonitorSavepointCreationResponse
@@ -28,6 +29,9 @@ type TestFlinkRestClient struct {
 
 func (c TestFlinkRestClient) Cancel(jobID string) error {
 	return mockedCancelError
+}
+func (c TestFlinkRestClient) Terminate(jobID string, mode string) error {
+	return mockedTerminateError
 }
 func (c TestFlinkRestClient) CreateSavepoint(jobID string, savepointPath string) (flink.CreateSavepointResponse, error) {
 	return mockedCreateSavepointResponse, mockedCreateSavepointError
